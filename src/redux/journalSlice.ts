@@ -30,8 +30,14 @@ const journalSlice = createSlice({
         state.entries[index] = action.payload;
       }
     },
+    // ADDED: Reducer to filter out the entry with the matching ID
+    deleteEntry: (state, action: PayloadAction<string>) => {
+      // Filter out the entry with the matching ID
+      state.entries = state.entries.filter(entry => entry.id !== action.payload);
+    },
   },
 });
 
-export const { addEntry, updateEntry } = journalSlice.actions;
+// EXPORTED: The new deleteEntry action creator is included here
+export const { addEntry, updateEntry, deleteEntry } = journalSlice.actions;
 export default journalSlice.reducer;

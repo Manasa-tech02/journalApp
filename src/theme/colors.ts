@@ -8,4 +8,5 @@ export const colors = {
   inputBg: '#FAFAFA',
   placeholder: '#B2B2B2',
   success: '#6B8E78',
+  danger: '#EF4444',
 };
