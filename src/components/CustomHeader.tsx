@@ -1,79 +1,101 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Platform } from 'react-native';
+import { Ionicons, Feather } from '@expo/vector-icons';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { Feather } from '@expo/vector-icons'; // Icon library
-import { colors } from '../theme/colors';
 
-export const CustomHeader = () => {
+export default function CustomHeader() {
   const navigation = useNavigation<any>();
   const route = useRoute();
 
-  const isWriteActive = route.name === 'Write';
+  const isActive = (screenName: string) => route.name === screenName;
 
   return (
-    <View style={styles.container}>
+    <View style={styles.headerContainer}>
+      {/* Left: Logo/Title */}
       <View style={styles.logoContainer}>
-        <Feather name="book-open" size={20} color={colors.text} />
-        <Text style={styles.logoText}>Daily Journal</Text>
+        <Feather name="book-open" size={20} color="#1F2937" style={{ marginRight: 8 }} />
+        <Text style={styles.headerTitle}>Daily Journal</Text>
       </View>
 
+      {/* Right: Navigation Links */}
       <View style={styles.navContainer}>
         <TouchableOpacity 
-          onPress={() => navigation.navigate('Write')} 
-          style={styles.navItem}
+          onPress={() => navigation.navigate('Write')}
+          style={[styles.navItem, isActive('Write') && styles.activeNavItem]}
         >
-          <Feather name="edit-2" size={16} color={isWriteActive ? colors.primary : colors.subText} />
-          <Text style={[styles.navText, isWriteActive && styles.activeText]}>Write</Text>
+          <Feather name="edit-2" size={16} color={isActive('Write') ? "#1F2937" : "#6B7280"} />
+          <Text style={[styles.navText, isActive('Write') ? styles.activeNavText : styles.inactiveNavText]}>
+            Write
+          </Text>
         </TouchableOpacity>
 
         <TouchableOpacity 
-          onPress={() => navigation.navigate('History')} 
-          style={[styles.navItem, { marginLeft: 20 }]}
+          onPress={() => navigation.navigate('History')}
+          style={[styles.navItem, isActive('History') && styles.activeNavItem]}
         >
-          <Feather name="clock" size={16} color={!isWriteActive ? colors.primary : colors.subText} />
-          <Text style={[styles.navText, !isWriteActive && styles.activeText]}>History</Text>
+          <Feather name="clock" size={16} color={isActive('History') ? "#1F2937" : "#6B7280"} />
+          <Text style={[styles.navText, isActive('History') ? styles.activeNavText : styles.inactiveNavText]}>
+            History
+          </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity 
+          onPress={() => navigation.navigate('Settings')}
+          style={styles.menuButton}
+        >
+          <Ionicons name="menu-outline" size={24} color="#1F2937" />
         </TouchableOpacity>
       </View>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
-  container: {
+  headerContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
+    justifyContent: 'space-between',
     paddingHorizontal: 20,
-    paddingVertical: 15,
-    backgroundColor: colors.background,
+    paddingVertical: 16,
+    backgroundColor: '#FDFBF7', // Cream background to match screenshot
     borderBottomWidth: 1,
     borderBottomColor: 'rgba(0,0,0,0.05)',
   },
   logoContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 8,
   },
-  logoText: {
+  headerTitle: {
     fontSize: 18,
     fontWeight: '700',
-    color: colors.text,
+    color: '#1F2937',
+    fontFamily: Platform.OS === 'ios' ? 'Georgia' : 'serif', // Serif font for "Daily Journal"
   },
   navContainer: {
     flexDirection: 'row',
+    alignItems: 'center',
+    gap: 20,
   },
   navItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 5,
+    gap: 6,
   },
   navText: {
     fontSize: 14,
-    color: colors.subText,
     fontWeight: '500',
   },
-  activeText: {
-    color: colors.primary,
-    fontWeight: '700',
+  activeNavItem: {
+    opacity: 1,
   },
+  activeNavText: {
+    color: '#1F2937',
+    fontWeight: '600',
+  },
+  inactiveNavText: {
+    color: '#6B7280',
+  },
+  menuButton: {
+    marginLeft: 10,
+  }
 });

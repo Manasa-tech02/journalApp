@@ -17,6 +17,7 @@ export const AppNavigator = () => {
     <Stack.Navigator screenOptions={{ headerShown: false, animation: 'fade' }}>
       <Stack.Screen name="Write" component={WriteScreen} />
       <Stack.Screen name="History" component={HistoryScreen} />
+      <Stack.Screen name=""
     </Stack.Navigator>
   );
 };
