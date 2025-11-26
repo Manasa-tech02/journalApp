@@ -16,11 +16,12 @@ import { useDispatch } from 'react-redux';
 // Adjust paths to your project structure
 import CustomHeader from '../components/CustomHeader';
 import { login } from '../redux/authSlice';
-import { colors } from '../theme/colors'; 
+import { useThemeColors } from '../theme/useTheme';
 
 export const LoginScreen = () => {
   const navigation = useNavigation<any>();
   const dispatch = useDispatch();
+  const colors = useThemeColors();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

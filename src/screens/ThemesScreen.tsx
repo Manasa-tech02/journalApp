@@ -11,6 +11,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Feather, Ionicons } from '@expo/vector-icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
+import { useThemeColors } from '../theme/useTheme';
 
 // Adjust paths to match your project
 import { setTheme, ThemeMode } from '../redux/themeSlice';
@@ -24,6 +25,7 @@ interface RootState {
 export const ThemesScreen = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
+  const colors = useThemeColors();
   
   // Get current saved theme from Redux
   const currentThemeMode = useSelector((state: RootState) => state.theme.mode);

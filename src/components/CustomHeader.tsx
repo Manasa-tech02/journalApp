@@ -2,10 +2,11 @@ import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Platform } from 'react-native';
 import { Ionicons, Feather } from '@expo/vector-icons';
 import { useNavigation, useRoute } from '@react-navigation/native';
-
+import { useThemeColors } from '../theme/useTheme';
 export default function CustomHeader() {
   const navigation = useNavigation<any>();
   const route = useRoute();
+  const colors = useThemeColors();
 
   const isActive = (screenName: string) => route.name === screenName;
 
@@ -70,6 +71,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     color: '#1F2937',
     fontFamily: Platform.OS === 'ios' ? 'Georgia' : 'serif', // Serif font for "Daily Journal"
+    marginRight:15,
   },
   navContainer: {
     flexDirection: 'row',
@@ -84,9 +86,11 @@ const styles = StyleSheet.create({
   navText: {
     fontSize: 14,
     fontWeight: '500',
+    
+    
   },
   activeNavItem: {
-    opacity: 1,
+    opacity: 5,
   },
   activeNavText: {
     color: '#1F2937',
@@ -96,6 +100,6 @@ const styles = StyleSheet.create({
     color: '#6B7280',
   },
   menuButton: {
-    marginLeft: 10,
+    marginLeft:-4,
   }
 });

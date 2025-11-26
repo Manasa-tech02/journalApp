@@ -73,7 +73,7 @@ const rootReducer = combineReducers({
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
-  whitelist: ['theme', 'auth'], // Save Theme and Auth to disk
+  whitelist: ['theme', 'auth','journal'], // Save Theme and Auth to disk
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

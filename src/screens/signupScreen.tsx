@@ -16,10 +16,12 @@ import { useDispatch } from 'react-redux';
 
 import  CustomHeader from '../components/CustomHeader';
 import { signup } from '../redux/authSlice';
+import { useThemeColors } from '../theme/useTheme';
 
 export const SignupScreen = () => {
   const navigation = useNavigation<any>();
   const dispatch = useDispatch();
+  const colors = useThemeColors();
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -38,7 +40,7 @@ export const SignupScreen = () => {
 
     // Simulate API call
     dispatch(signup({ name, email }));
-    navigation.navigate('Write');
+    navigation.navigate('Login');
   };
 
   return (
