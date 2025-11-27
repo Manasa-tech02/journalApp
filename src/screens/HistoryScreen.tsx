@@ -12,6 +12,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
+// ✅ 1. Import date-fns
+import { format, parseISO } from 'date-fns';
+
 // Imports
 import { useThemeColors } from '../theme/useTheme';
 import CustomHeader from '../components/CustomHeader';
@@ -24,7 +27,6 @@ export const HistoryScreen = () => {
   const navigation = useNavigation<any>();
   const dispatch = useDispatch();
 
- 
   const handleDelete = (id: string) => {
     Alert.alert(
       'Confirm Deletion',
@@ -46,6 +48,16 @@ export const HistoryScreen = () => {
       ? (item.content.length > 30 ? item.content.substring(0, 30) + '...' : item.content.split('\n')[0])
       : 'Untitled Entry';
 
+    // ✅ 2. Use date-fns to format the stored ISO string
+    // We check if item.date exists (modern entry), otherwise fallback to legacy displayDate
+    const formattedDate = item.date 
+      ? format(parseISO(item.date), 'EEEE, MMMM d, yyyy') 
+      : item.displayDate;
+
+    const formattedTime = item.date
+      ? format(parseISO(item.date), 'h:mm a')
+      : item.time;
+
     return (
       <View style={[
         styles.card, 
@@ -63,19 +75,17 @@ export const HistoryScreen = () => {
           
           <View style={styles.dateRow}>
             <Feather name="calendar" size={12} color={colors.subText} />
+            {/* Display the date-fns formatted date */}
             <Text style={[styles.cardDate, { color: colors.subText }]}>
-              {item.displayDate}
+              {formattedDate}
             </Text>
-            {/* Show time if available */}
-            {item.time && (
-              <>
-                <View style={[styles.dot, { backgroundColor: colors.subText }]} />
-                <Feather name="clock" size={12} color={colors.subText} />
-                <Text style={[styles.cardDate, { color: colors.subText }]}>
-                  {item.time}
-                </Text>
-              </>
-            )}
+            
+            {/* Display the date-fns formatted time */}
+            <View style={[styles.dot, { backgroundColor: colors.subText }]} />
+            <Feather name="clock" size={12} color={colors.subText} />
+            <Text style={[styles.cardDate, { color: colors.subText }]}>
+                {formattedTime}
+            </Text>
           </View>
           
           <Text style={[styles.cardPreview, { color: colors.subText }]} numberOfLines={1}>

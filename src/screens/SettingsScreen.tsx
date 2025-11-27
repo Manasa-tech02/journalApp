@@ -23,7 +23,7 @@ import { RootState } from '../redux/store';
 
 
 
-const { width } = Dimensions.get('window');
+const  {width}  = Dimensions.get('window');
 const DRAWER_WIDTH = width * 0.85; // Made slightly wider to fit the cards nicely
 
 export default function SettingsScreen() {

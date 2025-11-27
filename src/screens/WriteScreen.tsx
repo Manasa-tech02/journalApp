@@ -15,6 +15,9 @@ import { useDispatch } from 'react-redux';
 import { Feather } from '@expo/vector-icons';
 import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 
+// ✅ 1. Import date-fns
+import { format } from 'date-fns';
+
 // Imports
 import { useThemeColors } from '../theme/useTheme';
 import CustomHeader from '../components/CustomHeader';
@@ -24,7 +27,7 @@ import { RootStackParamList } from '../navigation/AppNavigator';
 type WriteScreenRouteProp = RouteProp<RootStackParamList, 'Write'>;
 
 export const WriteScreen = () => {
-  const colors = useThemeColors(); // ✅ Hook initialized here
+  const colors = useThemeColors();
   const [content, setContent] = useState('');
   const [isFocused, setIsFocused] = useState(false);
   const inputRef = useRef<TextInput>(null);
@@ -35,9 +38,12 @@ export const WriteScreen = () => {
   
   const existingEntry = route.params?.entry;
 
+  // ✅ 2. Modern Date Formatting
   const now = new Date();
-  const displayDate = now.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
-  const displayTime = now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+  // Format: "Thursday, November 27, 2025"
+  const displayDate = format(now, 'EEEE, MMMM d, yyyy'); 
+  // Format: "5:04 PM"
+  const displayTime = format(now, 'h:mm a');
 
   useEffect(() => {
     if (existingEntry) {
@@ -64,7 +70,9 @@ export const WriteScreen = () => {
 
     const entry: JournalEntry = {
       id: existingEntry ? existingEntry.id : Date.now().toString(),
-      date: new Date().toISOString(),
+      // ✅ 3. Still using ISO for the database (Machine readable)
+      date: new Date().toISOString(), 
+      // Saving the pretty string for display
       displayDate: existingEntry ? existingEntry.displayDate : displayDate,
       time: existingEntry ? existingEntry.time : displayTime,
       content,
@@ -154,7 +162,6 @@ export const WriteScreen = () => {
   );
 };
 
-// ✅ FIXED: No 'colors' variables used here
 const styles = StyleSheet.create({
   safeArea: { flex: 1 },
   container: { padding: 20 },
