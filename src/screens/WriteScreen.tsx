@@ -86,7 +86,7 @@ export const WriteScreen = () => {
     <SafeAreaView style={[styles.safeArea, { backgroundColor: colors.background }]}>
       <CustomHeader />
       <KeyboardAvoidingView 
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        behavior={Platform.OS === 'android' ? 'padding' : 'height'}
         style={{ flex: 1 }}
       >
         <ScrollView contentContainerStyle={styles.container}>

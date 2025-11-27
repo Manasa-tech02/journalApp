@@ -27,6 +27,10 @@ export const SignupScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const [isConfirmVisible, setIsConfirmVisible] = useState(false);
+  const[focusedField,setFocusedField] = useState<string | null>(null);
+
 
   const handleSignup = () => {
     if (!name || !email || !password || !confirmPassword) {
@@ -64,52 +68,91 @@ export const SignupScreen = () => {
           <View style={styles.inputGroup}>
             <Text style={styles.label}>Full Name</Text>
             <TextInput 
-              style={styles.input}
+              style={[styles.input, focusedField === "name" && styles.inputFocused]}
               placeholder="John Doe"
               placeholderTextColor="#9CA3AF"
               value={name}
               onChangeText={setName}
+              onFocus={()=>setFocusedField('name')}
+              onBlur={()=> setFocusedField(null)}
             />
           </View>
 
           {/* Email */}
-          <View style={styles.inputGroup}>
+          <View style={styles.inputGroup }>
             <Text style={styles.label}>Email</Text>
             <TextInput 
-              style={styles.input}
+              style={[styles.input , focusedField === "email" && styles.inputFocused]}
               placeholder="your@email.com"
               placeholderTextColor="#9CA3AF"
               keyboardType="email-address"
               autoCapitalize="none"
               value={email}
               onChangeText={setEmail}
+               onFocus={()=>setFocusedField('email')}
+              onBlur={()=> setFocusedField(null)}
             />
           </View>
 
           {/* Password */}
           <View style={styles.inputGroup}>
             <Text style={styles.label}>Password</Text>
-            <TextInput 
-              style={styles.input}
+            <View style={[styles.passwordContainer , focusedField === "password" && styles.inputFocused]}>
+              <TextInput 
+              style={styles.inputField}
               placeholder="Min. 6 characters"
               placeholderTextColor="#9CA3AF"
               secureTextEntry
               value={password}
               onChangeText={setPassword}
-            />
+              onFocus={()=>setFocusedField('password')}
+              onBlur={()=> setFocusedField(null)}
+              />
+            
+              <TouchableOpacity 
+                onPress={() => setIsPasswordVisible(!isPasswordVisible)} 
+                style={styles.eyeIcon}
+                >
+                <Feather 
+                  name={isPasswordVisible ? "eye" : "eye-off"} 
+                  size={15} 
+                  color={colors.subText} 
+                />
+                </TouchableOpacity>
+
+            </View>
+          
+             
+
+               
+            
+           
           </View>
 
           {/* Confirm Password */}
           <View style={styles.inputGroup}>
             <Text style={styles.label}>Confirm Password</Text>
-            <TextInput 
-              style={styles.input}
+            <View style={[styles.passwordContainer , focusedField === "confirmPassword" && styles.inputFocused]}>
+              <TextInput 
+              style={styles.inputField}
               placeholder="Confirm your password"
               placeholderTextColor="#9CA3AF"
               secureTextEntry
               value={confirmPassword}
               onChangeText={setConfirmPassword}
+               onFocus={()=>setFocusedField('confirmPassword')}
+              onBlur={()=> setFocusedField(null)}
             />
+             <TouchableOpacity 
+                onPress={() => setIsConfirmVisible(!isConfirmVisible)} 
+                style={styles.eyeIcon}
+              >
+                <Feather 
+                  name={isConfirmVisible ? "eye" : "eye-off"} 
+                  size={15} 
+                  color={colors.subText} 
+                />
+              </TouchableOpacity>
           </View>
 
           {/* Sign Up Button */}
@@ -127,6 +170,9 @@ export const SignupScreen = () => {
             <TouchableOpacity onPress={() => navigation.navigate('Login')}>
               <Text style={styles.linkText}>Sign in</Text>
             </TouchableOpacity>
+
+            </View>
+            
           </View>
 
         </View>
@@ -213,4 +259,29 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     textDecorationLine: 'underline',
   },
+  eyeIcon: {
+    padding: 4,
+  },
+  passwordContainer:{
+    backgroundColor: '#FFFFFF',
+    borderWidth: 1,
+    borderColor: '#E5E7EB',
+    borderRadius: 8,
+    flexDirection: 'row', // align horizontal
+    alignItems: 'center', // center vertical
+    paddingHorizontal: 16,
+
+  },
+  inputField:{
+    flex: 1, // Take up all space next to icon
+    paddingVertical: 12,
+    fontSize: 16,
+    color: '#1F2937',
+
+
+  },
+  inputFocused: {
+    borderColor: '#4E7C64', // The Sage Green color
+    borderWidth: 1.5,  
+  }
 });
