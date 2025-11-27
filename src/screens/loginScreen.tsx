@@ -35,7 +35,7 @@ const [focusedField, setFocusedField] = useState<string | null>(null);
     }
     
     // Simulate API call
-    dispatch(login({ email }));
+    dispatch(login({ email,password}));
     navigation.navigate('Write'); // Or wherever you want to go after login
   };
 

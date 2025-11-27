@@ -78,7 +78,7 @@ export const HistoryScreen = () => {
             )}
           </View>
           
-          <Text style={[styles.cardPreview, { color: colors.subText }]} numberOfLines={2}>
+          <Text style={[styles.cardPreview, { color: colors.subText }]} numberOfLines={1}>
             {item.content}
           </Text>
         </TouchableOpacity>

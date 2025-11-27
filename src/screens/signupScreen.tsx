@@ -43,7 +43,7 @@ export const SignupScreen = () => {
     }
 
     // Simulate API call
-    dispatch(signup({ name, email }));
+    dispatch(signup({ name, email,password}));
     navigation.navigate('Login');
   };
 
@@ -69,7 +69,7 @@ export const SignupScreen = () => {
             <Text style={styles.label}>Full Name</Text>
             <TextInput 
               style={[styles.input, focusedField === "name" && styles.inputFocused]}
-              placeholder="John Doe"
+              placeholder="Enter your name"
               placeholderTextColor="#9CA3AF"
               value={name}
               onChangeText={setName}
@@ -102,7 +102,7 @@ export const SignupScreen = () => {
               style={styles.inputField}
               placeholder="Min. 6 characters"
               placeholderTextColor="#9CA3AF"
-              secureTextEntry
+              secureTextEntry={!isPasswordVisible}
               value={password}
               onChangeText={setPassword}
               onFocus={()=>setFocusedField('password')}
@@ -118,7 +118,7 @@ export const SignupScreen = () => {
                   size={15} 
                   color={colors.subText} 
                 />
-                </TouchableOpacity>
+              </TouchableOpacity>
 
             </View>
           
@@ -137,7 +137,7 @@ export const SignupScreen = () => {
               style={styles.inputField}
               placeholder="Confirm your password"
               placeholderTextColor="#9CA3AF"
-              secureTextEntry
+              secureTextEntry={!isConfirmVisible}
               value={confirmPassword}
               onChangeText={setConfirmPassword}
                onFocus={()=>setFocusedField('confirmPassword')}
